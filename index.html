@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0b1220">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>KhiemCayThue - Gaming Platform</title>
+    <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-gamepad me-2"></i>KhiemCayThue
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Trang chủ</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#customer-info">Thông tin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#slot">Đặt slot</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#rank">Cải thiện rank</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#schedule">Lịch</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Liên hệ</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Chào mừng đến với Trang của Khiêm</h1>
+            <p class="hero-subtitle">Nơi bạn có thể tin tưởng và an tâm khi sử dụng dịch vụ.</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section id="dashboard" class="container">
+        <div class="dashboard-card">
+            <!-- Validation Guide -->
+            <div class="validation-guide mb-4">
+                <div class="alert alert-info" role="alert">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Hướng dẫn:</strong> Vui lòng điền đầy đủ tất cả các trường có dấu <span
+                        class="text-danger">*</span> để có thể sử dụng các chức năng.
+                    Các button sẽ được kích hoạt tự động khi thông tin đầy đủ.
+                </div>
+            </div>
+
+            <!-- Thông tin Khách hàng -->
+            <section id="customer-info" class="section">
+                <div class="section-title">
+                    <i class="fas fa-user fa-lg"></i>
+                    <h3 class="m-0">Thông tin Khách hàng</h3>
+                </div>
+                <div class="neon-divider"></div>
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <label class="form-label required">Họ và tên</label>
+                        <input type="text" class="form-control" id="customerName" placeholder="Nhập họ và tên">
+                        <div class="validation-message" id="customerNameValidation"></div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 mb-3">
+                        <label class="form-label required">Link FB / Sđt / Zalo</label>
+                        <input type="text" class="form-control" id="customerContact"
+                            placeholder="Nhập thông tin liên hệ">
+                        <div class="validation-message" id="customerContactValidation"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Đặt Slot -->
+            <section id="slot" class="section">
+                <div class="section-title">
+                    <i class="fas fa-calendar-plus fa-lg"></i>
+                    <h3 class="m-0">Đặt Slot</h3>
+                </div>
+                <div class="neon-divider"></div>
+                <form id="slotForm">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 mb-3">
+                            <label class="form-label required">Ngày</label>
+                            <input type="date" class="form-control" id="slotDate" required>
+                            <div class="validation-message" id="slotDateValidation"></div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 mb-3">
+                            <label class="form-label required">Giờ (Ca)</label>
+                            <select class="form-select" id="slotTime" required>
+                                <option value="">Chọn ca</option>
+                            </select>
+                            <div class="validation-message" id="slotTimeValidation"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label required">Thời lượng (giờ)</label>
+                        <select class="form-select" id="slotDuration" required>
+                            <option value="">Chọn thời lượng</option>
+                            <option value="1">1 tiếng</option>
+                            <option value="2">2 tiếng</option>
+                            <option value="3">3 tiếng</option>
+                            <option value="4">4 tiếng</option>
+                            <option value="5">5 tiếng</option>
+                            <option value="6">6 tiếng</option>
+                            <option value="7">7 tiếng</option>
+                            <option value="8">8 tiếng</option>
+                            <option value="9">9 tiếng</option>
+                            <option value="10">10 tiếng</option>
+                        </select>
+                        <div class="validation-message" id="slotDurationValidation"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mô tả (Không bắt buộc)</label>
+                        <textarea class="form-control" id="slotDescription" rows="3"
+                            placeholder="Nhập mô tả chi tiết (nếu có)"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Voucher (Không bắt buộc)</label>
+                        <input type="text" class="form-control" id="slotVoucher" placeholder="Nhập mã voucher">
+                    </div>
+                    <div class="price-display" id="slotPriceDisplay" style="display: none;">
+                        <h3>Tổng tiền: <span id="slotTotalPrice">0đ</span></h3>
+                        <div id="slotPriceDetails"></div>
+                    </div>
+                    <button type="submit" class="btn btn-disabled w-100" disabled>
+                        <i class="fas fa-plus me-1"></i>Đặt Slot
+                    </button>
+                </form>
+
+                <!-- Pending Slots Table -->
+                <div class="mt-4">
+                    <h5 class="mb-2"><i class="fas fa-clock me-2"></i>Slot đã đặt (Chờ thanh toán)</h5>
+                    <div class="table-responsive">
+                        <table class="table table-dark table-striped" id="pendingSlots">
+                            <thead>
+                                <tr>
+                                    <th>Khách hàng</th>
+                                    <th>Liên hệ</th>
+                                    <th>Ngày</th>
+                                    <th>Giờ</th>
+                                    <th>Thời lượng</th>
+                                    <th>Mô tả</th>
+                                    <th>Giá</th>
+                                    <th>Trạng thái</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Cải thiện Rank -->
+            <section id="rank" class="section">
+                <div class="section-title">
+                    <i class="fas fa-trophy fa-lg"></i>
+                    <h3 class="m-0">Cải Thiện Rank</h3>
+                </div>
+                <div class="neon-divider"></div>
+                <form id="rankForm">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 mb-3">
+                            <label class="form-label required">Loại cày</label>
+                            <select class="form-select" id="rankType" required>
+                                <option value="">Chọn loại cày</option>
+                                <option value="Cày đơn">Cày đơn</option>
+                                <option value="Cày đội">Cày đội</option>
+                            </select>
+                            <div class="validation-message" id="rankTypeValidation"></div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 mb-3">
+                            <label class="form-label required">Khiêm cầm acc</label>
+                            <select class="form-select" id="accHandling" required>
+                                <option value="">Chọn tùy chọn</option>
+                                <option value="Không">Không</option>
+                                <option value="Khiêm cầm acc">Khiêm cầm acc trên live only team 3/5 (+30,000đ)</option>
+                            </select>
+                            <div class="validation-message" id="accHandlingValidation"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 mb-3">
+                            <label class="form-label required">Bậc rank hiện tại</label>
+                            <select class="form-select" id="currentRank" required>
+                                <option value="">Chọn rank hiện tại</option>
+                            </select>
+                            <div class="validation-message" id="currentRankValidation"></div>
+                        </div>
+                        <div class="col-lg-6 col-md-6 mb-3">
+                            <label class="form-label required">Rank sau khi cải thiện</label>
+                            <select class="form-select" id="targetRank" required>
+                                <option value="">Chọn rank mục tiêu</option>
+                            </select>
+                            <div class="validation-message" id="targetRankValidation"></div>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Voucher (Không bắt buộc)</label>
+                        <input type="text" class="form-control" id="rankVoucher" placeholder="Nhập mã voucher">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ghi chú (Không bắt buộc)</label>
+                        <textarea class="form-control" id="rankNote" rows="3"
+                            placeholder="Nhập ghi chú (nếu có)"></textarea>
+                    </div>
+                    <button type="button" class="btn btn-disabled w-100" onclick="calculateRankPrice()" disabled>
+                        <i class="fas fa-calculator me-1"></i>Tính giá
+                    </button>
+                    <div class="price-display" id="rankPriceDisplay" style="display: none;">
+                        <h3>Tổng tiền: <span id="rankTotalPrice">0đ</span></h3>
+                        <div id="rankPriceDetails"></div>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Lịch Live và Slot -->
+            <section id="schedule" class="section">
+                <div class="section-title">
+                    <i class="fas fa-list-alt fa-lg"></i>
+                    <h3 class="m-0">Lịch Live và Slot</h3>
+                </div>
+                <div class="neon-divider"></div>
+                <div class="table-responsive">
+                    <table class="table table-dark table-striped" id="scheduleTable">
+                        <thead>
+                            <tr>
+                                <th>Khách hàng</th>
+                                <th>Ngày</th>
+                                <th>Giờ bắt đầu</th>
+                                <th>Giờ kết thúc</th>
+                                <th>Trạng thái Slot</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="container">
+        <div class="dashboard-card">
+            <div class="contact-section">
+                <h3><i class="fas fa-address-book me-2"></i>Thông tin liên hệ</h3>
+                <div class="contact-links mt-3">
+                    <a href="https://www.facebook.com/basil.0712" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-facebook me-1"></i>Facebook
+                    </a>
+                    <a href="mailto:nguyenquang07122005@icloud.com">
+                        <i class="fas fa-envelope me-1"></i>Email
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+
+</html>

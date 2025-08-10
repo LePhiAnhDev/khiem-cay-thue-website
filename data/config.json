@@ -1,0 +1,80 @@
+{
+    "telegram": {
+        "botTokenEnc": "cAB2WHwLE05lCxkwAz9oL3RxUzoISRAXVUYLACNLA3AFJg5YVSENa0oYGxhIBg==",
+        "chatIdEnc": "dgdwX30MF0pjAg=="
+    },
+    "pricing": {
+        "slotPricePerHour": 15000,
+        "accHandlingFee": 30000,
+        "minPrice": 50000,
+        "defaultPricePerStar": 5000,
+        "single": {
+            "lowTiers": 3000,
+            "caoThuOrDCTNotIII": 4000,
+            "dctIII_1_25": 4000,
+            "dctIII_26_49": 7000,
+            "chienTuong_50_75": 15000,
+            "chienTuong_76_99": 20000,
+            "chienThan": 30000
+        },
+        "duo": {
+            "lowTiers": 4000,
+            "caoThuOrDCTNotIII": 6000,
+            "dctIII_1_25": 6000,
+            "dctIII_26_49": 9000,
+            "chienTuong_50_75": 17000,
+            "chienTuong_76_99": 25000,
+            "chienThan": 40000
+        }
+    },
+    "timeSlots": [
+        {
+            "label": "Ca 7g Sáng",
+            "start": "07:00"
+        },
+        {
+            "label": "Ca 2g Chiều",
+            "start": "14:00"
+        },
+        {
+            "label": "Ca 10g Tối",
+            "start": "22:00"
+        }
+    ],
+    "vouchers": {
+        "anhkhiemdz": 0.15,
+        "vietnammuonnam": 0.4,
+        "tuilakhiemne": 0.08,
+        "ibchokhiem": 0.08,
+        "caythuesieure": {
+            "type": "range",
+            "min": 0.03,
+            "max": 0.07
+        },
+        "uytinnhanhgon": {
+            "type": "range",
+            "min": 0.03,
+            "max": 0.07
+        },
+        "0902abz": {
+            "type": "range",
+            "min": 0.03,
+            "max": 0.07
+        },
+        "639671ggl": {
+            "type": "range",
+            "min": 0.03,
+            "max": 0.07
+        },
+        "caithienrankgiare": {
+            "type": "range",
+            "min": 0.03,
+            "max": 0.07
+        },
+        "ibibibib": {
+            "type": "range",
+            "min": 0.03,
+            "max": 0.07
+        }
+    }
+}
