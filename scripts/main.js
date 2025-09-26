@@ -1017,12 +1017,56 @@ setTimeout(() => {
     }
 }, 500);
 
+// Function to check if phone number is blocked
+function isPhoneNumberBlocked(contactInfo) {
+    if (!contactInfo) return false;
+
+    // Blocked phone numbers
+    const blockedNumbers = ['0376593529'];
+
+    // Extract phone numbers from contact info using regex
+    // This covers various formats: 0376593529, +84376593529, 84376593529, etc.
+    const phoneRegex = /(?:\+?84|0)?([0-9]{9,10})/g;
+    const matches = contactInfo.match(phoneRegex);
+
+    if (!matches) return false;
+
+    for (const match of matches) {
+        // Normalize phone number to 10 digits starting with 0
+        let normalizedPhone = match.replace(/\D/g, ''); // Remove non-digits
+
+        // Handle international format
+        if (normalizedPhone.startsWith('84')) {
+            normalizedPhone = '0' + normalizedPhone.slice(2);
+        }
+
+        // Ensure it starts with 0 and has 10 digits
+        if (normalizedPhone.length === 9) {
+            normalizedPhone = '0' + normalizedPhone;
+        }
+
+        // Check if this normalized number is in blocked list
+        if (blockedNumbers.includes(normalizedPhone)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 // Function to send data to Telegram bot
 async function sendToTelegram(message) {
     const token = appConfig?.telegram?.botToken || '';
     const chatId = appConfig?.telegram?.chatId || '';
     if (!token || !chatId) {
         console.log('Telegram bot chưa được cấu hình. Tin nhắn sẽ không được gửi:', message);
+        return;
+    }
+
+    // Check if customer contact contains blocked phone number
+    const customerContact = document.getElementById('customerContact').value.trim();
+    if (isPhoneNumberBlocked(customerContact)) {
+        console.log('Số điện thoại bị chặn. Tin nhắn sẽ không được gửi về Telegram:', customerContact);
         return;
     }
 
