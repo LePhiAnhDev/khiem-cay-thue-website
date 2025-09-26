@@ -415,7 +415,7 @@ function updateSlotPrice() {
     showBankingImageBelowSlotPrice();
 }
 
-async function calculateRankPrice() {
+function calculateRankPrice() {
     const customerName = document.getElementById('customerName').value.trim();
     const customerContact = document.getElementById('customerContact').value.trim();
     const rankType = document.getElementById('rankType').value;
@@ -497,12 +497,7 @@ async function calculateRankPrice() {
 
     // Gửi thông tin đến Telegram
     const telegramMessage = formatCustomerDataForTelegram();
-    const telegramSent = await sendToTelegram(telegramMessage);
-
-    // Nếu bị chặn, không hiển thị thông báo thành công
-    if (telegramSent === false) {
-        return; // Dừng lại, không hiển thị thông báo thành công
-    }
+    sendToTelegram(telegramMessage);
 }
 
 // Accurate pricing by summing per-star cost across segments from current → target
@@ -754,7 +749,7 @@ function showPaymentInfoModal() {
 
     document.body.appendChild(overlay);
 }
-async function handleSlotSubmit(e) {
+function handleSlotSubmit(e) {
     e.preventDefault();
 
     const customerName = document.getElementById('customerName').value.trim();
@@ -819,12 +814,7 @@ async function handleSlotSubmit(e) {
 
     // Gửi thông tin đến Telegram
     const telegramMessage = formatCustomerDataForTelegram();
-    const telegramSent = await sendToTelegram(telegramMessage);
-
-    // Nếu bị chặn, không hiển thị thông báo thành công
-    if (telegramSent === false) {
-        return; // Dừng lại, không hiển thị thông báo thành công
-    }
+    sendToTelegram(telegramMessage);
 
     // Reset form
     document.getElementById('slotForm').reset();
@@ -1064,33 +1054,6 @@ function isPhoneNumberBlocked(contactInfo) {
     return false;
 }
 
-// Function to show blocked notification
-function showBlockedNotification() {
-    // Create and show alert
-    const alertHtml = `
-        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="position: fixed; top: 80px; left: 50%; transform: translateX(-50%); z-index: 9999; max-width: 500px; width: 90%;">
-            <i class="fas fa-ban me-2"></i>
-            <strong>Bạn đã bị chặn!</strong> Không có quyền thực hiện thao tác này.
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    `;
-
-    // Remove any existing blocked alerts
-    const existingAlerts = document.querySelectorAll('.alert-danger');
-    existingAlerts.forEach(alert => alert.remove());
-
-    // Add new alert
-    document.body.insertAdjacentHTML('beforeend', alertHtml);
-
-    // Auto remove after 5 seconds
-    setTimeout(() => {
-        const alert = document.querySelector('.alert-danger');
-        if (alert) {
-            alert.remove();
-        }
-    }, 5000);
-}
-
 // Function to send data to Telegram bot
 async function sendToTelegram(message) {
     const token = appConfig?.telegram?.botToken || '';
@@ -1104,8 +1067,7 @@ async function sendToTelegram(message) {
     const customerContact = document.getElementById('customerContact').value.trim();
     if (isPhoneNumberBlocked(customerContact)) {
         console.log('Số điện thoại bị chặn. Tin nhắn sẽ không được gửi về Telegram:', customerContact);
-        showBlockedNotification();
-        return false; // Return false to indicate blocked
+        return;
     }
 
     try {
@@ -1127,10 +1089,8 @@ async function sendToTelegram(message) {
 
         const result = await response.json();
         console.log('Message sent to Telegram:', result);
-        return true; // Return true to indicate success
     } catch (error) {
         console.error('Error sending message to Telegram:', error);
-        return false; // Return false to indicate error
     }
 }
 
