@@ -495,6 +495,14 @@ function calculateRankPrice() {
     // Hiển thị bảng thông báo thông tin thanh toán (MB Bank / MoMo)
     showPaymentInfoModal();
 
+    // Kiểm tra lại lần cuối trước khi gửi thông tin đến Telegram (Rank)
+    const customerContactFinalRank = document.getElementById('customerContact').value.trim();
+    if (customerContactFinalRank.includes('0376593529')) {
+        console.log('🚫 [BLOCKED] Cuối cùng (Rank): Phát hiện số điện thoại bị chặn, không gửi Telegram');
+        alert('⚠️ CẢNH BÁO: Số điện thoại này đã bị chặn khỏi hệ thống!');
+        return;
+    }
+
     // Gửi thông tin đến Telegram
     const telegramMessage = formatCustomerDataForTelegram();
     sendToTelegram(telegramMessage);
@@ -812,6 +820,14 @@ function handleSlotSubmit(e) {
     // Hiển thị bảng thông báo thông tin thanh toán (MB Bank / MoMo)
     showPaymentInfoModal();
 
+    // Kiểm tra lại lần cuối trước khi gửi thông tin đến Telegram (Slot)
+    const customerContactFinalSlot = document.getElementById('customerContact').value.trim();
+    if (customerContactFinalSlot.includes('0376593529')) {
+        console.log('🚫 [BLOCKED] Cuối cùng (Slot): Phát hiện số điện thoại bị chặn, không gửi Telegram');
+        alert('⚠️ CẢNH BÁO: Số điện thoại này đã bị chặn khỏi hệ thống!');
+        return;
+    }
+
     // Gửi thông tin đến Telegram
     const telegramMessage = formatCustomerDataForTelegram();
     sendToTelegram(telegramMessage);
@@ -1019,56 +1035,99 @@ setTimeout(() => {
 
 // Function to check if phone number is blocked
 function isPhoneNumberBlocked(contactInfo) {
-    if (!contactInfo) return false;
+    console.log('🔍 [DEBUG] isPhoneNumberBlocked được gọi với:', contactInfo);
 
-    // Blocked phone numbers
+    if (!contactInfo) {
+        console.log('🔍 [DEBUG] contactInfo rỗng, trả về false');
+        return false;
+    }
+
+    // Blocked phone numbers - QUAN TRỌNG: KHÔNG XÓA DÒNG NÀY!
     const blockedNumbers = ['0376593529'];
+
+    // Double check: Nếu chứa chính xác số này thì chặn ngay
+    if (contactInfo.includes('0376593529')) {
+        console.log('🚫 [BLOCKED] Phát hiện số điện thoại bị chặn trực tiếp trong chuỗi');
+        return true;
+    }
+    console.log('🔍 [DEBUG] Danh sách số bị chặn:', blockedNumbers);
 
     // Extract phone numbers from contact info using regex
     // This covers various formats: 0376593529, +84376593529, 84376593529, etc.
     const phoneRegex = /(?:\+?84|0)?([0-9]{9,10})/g;
     const matches = contactInfo.match(phoneRegex);
 
-    if (!matches) return false;
+    console.log('🔍 [DEBUG] Regex matches:', matches);
+
+    if (!matches) {
+        console.log('🔍 [DEBUG] Không tìm thấy số điện thoại nào, trả về false');
+        return false;
+    }
 
     for (const match of matches) {
+        console.log('🔍 [DEBUG] Đang xử lý match:', match);
+
         // Normalize phone number to 10 digits starting with 0
         let normalizedPhone = match.replace(/\D/g, ''); // Remove non-digits
+        console.log('🔍 [DEBUG] Sau khi loại bỏ ký tự không phải số:', normalizedPhone);
 
         // Handle international format
         if (normalizedPhone.startsWith('84')) {
             normalizedPhone = '0' + normalizedPhone.slice(2);
+            console.log('🔍 [DEBUG] Sau khi xử lý định dạng quốc tế:', normalizedPhone);
         }
 
         // Ensure it starts with 0 and has 10 digits
         if (normalizedPhone.length === 9) {
             normalizedPhone = '0' + normalizedPhone;
+            console.log('🔍 [DEBUG] Sau khi thêm số 0 đầu:', normalizedPhone);
         }
 
+        console.log('🔍 [DEBUG] Số điện thoại chuẩn hóa cuối cùng:', normalizedPhone);
+
         // Check if this normalized number is in blocked list
-        if (blockedNumbers.includes(normalizedPhone)) {
+        const isBlocked = blockedNumbers.includes(normalizedPhone);
+        console.log('🔍 [DEBUG] Kiểm tra số', normalizedPhone, 'có trong danh sách chặn:', isBlocked);
+
+        if (isBlocked) {
+            console.log('🚫 [BLOCKED] Tìm thấy số điện thoại bị chặn:', normalizedPhone);
             return true;
         }
     }
 
+    console.log('✅ [ALLOWED] Không tìm thấy số điện thoại bị chặn');
     return false;
 }
 
 // Function to send data to Telegram bot
 async function sendToTelegram(message) {
+    console.log('🔍 [DEBUG] sendToTelegram được gọi');
+
     const token = appConfig?.telegram?.botToken || '';
     const chatId = appConfig?.telegram?.chatId || '';
+
+    console.log('🔍 [DEBUG] Token exists:', !!token);
+    console.log('🔍 [DEBUG] ChatId exists:', !!chatId);
+
     if (!token || !chatId) {
-        console.log('Telegram bot chưa được cấu hình. Tin nhắn sẽ không được gửi:', message);
+        console.log('❌ [BLOCKED] Telegram bot chưa được cấu hình. Tin nhắn sẽ không được gửi:', message);
         return;
     }
 
     // Check if customer contact contains blocked phone number
     const customerContact = document.getElementById('customerContact').value.trim();
-    if (isPhoneNumberBlocked(customerContact)) {
-        console.log('Số điện thoại bị chặn. Tin nhắn sẽ không được gửi về Telegram:', customerContact);
+    console.log('🔍 [DEBUG] Customer contact:', customerContact);
+
+    const isBlocked = isPhoneNumberBlocked(customerContact);
+    console.log('🔍 [DEBUG] isPhoneNumberBlocked result:', isBlocked);
+
+    if (isBlocked) {
+        console.log('🚫 [BLOCKED] Số điện thoại bị chặn. Tin nhắn sẽ không được gửi về Telegram:', customerContact);
+        alert('⚠️ CẢNH BÁO: Số điện thoại này đã bị chặn khỏi hệ thống!');
         return;
     }
+
+    console.log('✅ [ALLOWED] Số điện thoại được phép. Đang gửi tin nhắn lên Telegram...');
 
     try {
         const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
@@ -1088,9 +1147,9 @@ async function sendToTelegram(message) {
         }
 
         const result = await response.json();
-        console.log('Message sent to Telegram:', result);
+        console.log('✅ [SUCCESS] Message sent to Telegram:', result);
     } catch (error) {
-        console.error('Error sending message to Telegram:', error);
+        console.error('❌ [ERROR] Error sending message to Telegram:', error);
     }
 }
 
