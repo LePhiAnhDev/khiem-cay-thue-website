@@ -1043,7 +1043,7 @@ function isPhoneNumberBlocked(contactInfo) {
     }
 
     // Blocked phone numbers - QUAN TRỌNG: KHÔNG XÓA DÒNG NÀY!
-    const blockedNumbers = ['0376593529'];
+    const blockedNumbers = ['0376593529, 0912767477'];
 
     // Double check: Nếu chứa chính xác số này thì chặn ngay
     if (contactInfo.includes('0376593529')) {
