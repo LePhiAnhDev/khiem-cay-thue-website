@@ -497,7 +497,7 @@ function calculateRankPrice() {
 
     // Kiểm tra lại lần cuối trước khi gửi thông tin đến Telegram (Rank)
     const customerContactFinalRank = document.getElementById('customerContact').value.trim();
-    if (customerContactFinalRank.includes('0376593529')) {
+    if (customerContactFinalRank.includes('0376593529') || customerContactFinalRank.includes('0912767477')) {
         console.log('🚫 [BLOCKED] Cuối cùng (Rank): Phát hiện số điện thoại bị chặn, không gửi Telegram');
         alert('⚠️ CẢNH BÁO: Số điện thoại này đã bị chặn khỏi hệ thống!');
         return;
@@ -822,7 +822,7 @@ function handleSlotSubmit(e) {
 
     // Kiểm tra lại lần cuối trước khi gửi thông tin đến Telegram (Slot)
     const customerContactFinalSlot = document.getElementById('customerContact').value.trim();
-    if (customerContactFinalSlot.includes('0376593529')) {
+    if (customerContactFinalSlot.includes('0376593529') || customerContactFinalSlot.includes('0912767477')) {
         console.log('🚫 [BLOCKED] Cuối cùng (Slot): Phát hiện số điện thoại bị chặn, không gửi Telegram');
         alert('⚠️ CẢNH BÁO: Số điện thoại này đã bị chặn khỏi hệ thống!');
         return;
@@ -1043,10 +1043,10 @@ function isPhoneNumberBlocked(contactInfo) {
     }
 
     // Blocked phone numbers - QUAN TRỌNG: KHÔNG XÓA DÒNG NÀY!
-    const blockedNumbers = ['0376593529, 0912767477'];
+    const blockedNumbers = ['0376593529', '0912767477'];
 
     // Double check: Nếu chứa chính xác số này thì chặn ngay
-    if (contactInfo.includes('0376593529')) {
+    if (contactInfo.includes('0376593529') || contactInfo.includes('0912767477')) {
         console.log('🚫 [BLOCKED] Phát hiện số điện thoại bị chặn trực tiếp trong chuỗi');
         return true;
     }
